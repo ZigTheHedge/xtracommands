@@ -4,6 +4,7 @@ import com.cwelth.xtracommands.XtraCommands;
 import com.cwelth.xtracommands.effects.MobEffectReverse;
 import com.cwelth.xtracommands.effects.MobEffectsRegistry;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraftforge.api.distmarker.Dist;
@@ -21,7 +22,9 @@ public class ClientEventHandler {
     @SubscribeEvent
     public static void KeyPress(InputEvent.KeyInputEvent event)
     {
-        if(Minecraft.getInstance().player.hasEffect(MobEffectsRegistry.MOB_EFFECT_REVERSE.get()))
+        LocalPlayer player = Minecraft.getInstance().player;
+        if(player == null) return;
+        if(player.hasEffect(MobEffectsRegistry.MOB_EFFECT_REVERSE.get()))
         {
             if(!isKeyDownDown && Minecraft.getInstance().options.keyUp.isDown())
             {

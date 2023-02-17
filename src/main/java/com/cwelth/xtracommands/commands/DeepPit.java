@@ -30,6 +30,7 @@ public class DeepPit {
                                         level.setBlockAndUpdate(pos, Blocks.WATER.defaultBlockState());
                                     }
 
+                            player.unRide();
                             player.teleportTo(player.getX(), crawlerHeight, player.getZ());
 
                             return 0;
@@ -50,6 +51,7 @@ public class DeepPit {
                                         level.setBlockAndUpdate(pos, Blocks.LAVA.defaultBlockState());
                                     }
 
+                            player.unRide();
                             player.teleportTo(player.getX(), crawlerHeight, player.getZ());
 
                             return 0;
@@ -90,6 +92,7 @@ public class DeepPit {
                                 }
                     }
 
+                    player.unRide();
                     player.teleportTo(player.getX(), crawlerHeight, player.getZ());
 
                     return 0;
