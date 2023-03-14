@@ -15,5 +15,6 @@ public class MobEffectsRegistry {
         MOB_EFFECTS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
     public static final RegistryObject<MobEffect> MOB_EFFECT_REVERSE = MOB_EFFECTS.register("reverse", MobEffectReverse::new);
+    public static final RegistryObject<MobEffect> MOB_EFFECT_ROLL = MOB_EFFECTS.register("roll", MobEffectRoll::new);
 
 }

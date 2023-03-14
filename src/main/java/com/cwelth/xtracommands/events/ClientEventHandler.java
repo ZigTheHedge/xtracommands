@@ -8,6 +8,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -18,6 +19,7 @@ public class ClientEventHandler {
     private static boolean isKeyUpDown = false;
     private static boolean isKeyLeftDown = false;
     private static boolean isKeyRightDown = false;
+    private static int rollAngle = 0;
 
     @SubscribeEvent
     public static void KeyPress(InputEvent.KeyInputEvent event)
@@ -87,6 +89,31 @@ public class ClientEventHandler {
                 isKeyRightDown = false;
                 Minecraft.getInstance().options.keyLeft.setDown(false);
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void cameraRoll(EntityViewRenderEvent.CameraSetup event) {
+        LocalPlayer player = Minecraft.getInstance().player;
+        if(player == null) return;
+        if(player.hasEffect(MobEffectsRegistry.MOB_EFFECT_ROLL.get()))
+        {
+            int level = player.getEffect(MobEffectsRegistry.MOB_EFFECT_ROLL.get()).getAmplifier();
+            if(level == 0)
+                event.setRoll(180);
+            if(level == 1)
+                event.setRoll(90);
+            if(level == 2)
+                event.setRoll(270);
+            if(level >= 3) {
+                rollAngle += (level - 2);
+                if(rollAngle > 360) rollAngle = 0;
+                event.setRoll(rollAngle);
+            }
+
+        } else
+        {
+            if(rollAngle != 0) rollAngle = 0;
         }
     }
 }
