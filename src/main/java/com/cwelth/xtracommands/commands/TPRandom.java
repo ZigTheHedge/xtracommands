@@ -36,11 +36,11 @@ public class TPRandom {
                                     double deltaX = player.getX() - max_delta;
                                     double deltaZ = player.getZ() - max_delta;
 
-                                    deltaX += level.random.nextDouble(max_delta * 2);
+                                    deltaX += level.random.nextInt((int)max_delta * 2);
                                     if(deltaX < player.getX()) deltaX -= min_distance;
                                     else deltaX += min_distance;
 
-                                    deltaZ += level.random.nextDouble(max_delta * 2);
+                                    deltaZ += level.random.nextInt((int)max_delta * 2);
                                     if(deltaZ < player.getZ()) deltaZ -= min_distance;
                                     else deltaZ += min_distance;
 

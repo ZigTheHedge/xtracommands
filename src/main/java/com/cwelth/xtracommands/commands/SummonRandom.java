@@ -1,6 +1,7 @@
 package com.cwelth.xtracommands.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
@@ -40,9 +41,11 @@ public class SummonRandom {
         int rndLimit = variants.size();
         for (int i = 0; i < count; i++)
         {
-            String summonCommand = "/summon " + variants.get((int)(Math.random() * rndLimit));
+            String summonCommand = "summon " + variants.get((int)(Math.random() * rndLimit));
             ServerPlayer player = cs.getPlayerOrException();
-            player.getServer().getCommands().performCommand(cs, summonCommand);
+            CommandDispatcher<CommandSourceStack> commanddispatcher = player.getServer().getCommands().getDispatcher();
+            ParseResults<CommandSourceStack> results = commanddispatcher.parse(summonCommand, cs);
+            player.getServer().getCommands().performCommand(results, summonCommand);
         }
     }
 }

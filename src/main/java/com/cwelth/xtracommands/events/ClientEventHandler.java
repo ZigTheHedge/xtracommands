@@ -1,15 +1,13 @@
 package com.cwelth.xtracommands.events;
 
 import com.cwelth.xtracommands.XtraCommands;
-import com.cwelth.xtracommands.effects.MobEffectReverse;
 import com.cwelth.xtracommands.effects.MobEffectsRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityViewRenderEvent;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -22,7 +20,7 @@ public class ClientEventHandler {
     private static int rollAngle = 0;
 
     @SubscribeEvent
-    public static void KeyPress(InputEvent.KeyInputEvent event)
+    public static void KeyPress(InputEvent.Key event)
     {
         LocalPlayer player = Minecraft.getInstance().player;
         if(player == null) return;
@@ -93,7 +91,7 @@ public class ClientEventHandler {
     }
 
     @SubscribeEvent
-    public static void cameraRoll(EntityViewRenderEvent.CameraSetup event) {
+    public static void cameraRoll(ViewportEvent.ComputeCameraAngles event) {
         LocalPlayer player = Minecraft.getInstance().player;
         if(player == null) return;
         if(player.hasEffect(MobEffectsRegistry.MOB_EFFECT_ROLL.get()))
