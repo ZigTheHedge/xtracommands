@@ -1,9 +1,6 @@
 package com.cwelth.xtracommands;
 
-import com.cwelth.xtracommands.commands.DeepPit;
-import com.cwelth.xtracommands.commands.DropHeldItems;
-import com.cwelth.xtracommands.commands.Quake;
-import com.cwelth.xtracommands.commands.UnequipArmor;
+import com.cwelth.xtracommands.commands.*;
 import com.cwelth.xtracommands.effects.MobEffectsRegistry;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.tree.LiteralCommandNode;
@@ -43,6 +40,8 @@ public class XtraCommands {
                             .then(UnequipArmor.register(dispatcher))
                             .then(DeepPit.register(dispatcher))
                             .then(Quake.register(dispatcher))
+                            .then(SummonRandom.register(dispatcher))
+                            .then(TPRandom.register(dispatcher))
             );
             dispatcher.register(Commands.literal(XtraCommands.MOD_ID).redirect(cmdsXC));
         }
