@@ -33,6 +33,7 @@ public class TPRandom {
                                 boolean success = false;
                                 while(!success)
                                 {
+                                    /*
                                     double deltaX = player.getX() - max_delta;
                                     double deltaZ = player.getZ() - max_delta;
 
@@ -43,6 +44,13 @@ public class TPRandom {
                                     deltaZ += level.random.nextDouble(max_delta * 2);
                                     if(deltaZ < player.getZ()) deltaZ -= min_distance;
                                     else deltaZ += min_distance;
+                                    */
+
+                                    double r = min_distance + max_delta * Math.sqrt(level.random.nextDouble());
+                                    double theta = level.random.nextDouble() * 2 * Math.PI;
+
+                                    double deltaX = player.getX() + r * Math.cos(theta);
+                                    double deltaZ = player.getZ() + r * Math.sin(theta);
 
                                     //Find empty spot +/- 10*10
                                     double y_adder = player.getY();
