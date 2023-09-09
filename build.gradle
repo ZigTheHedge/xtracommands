@@ -4,7 +4,7 @@ plugins {
     id 'net.minecraftforge.gradle' version '5.1.+'
 }
 
-version = '1.19.2-3.0.2'
+version = '1.19.2-3.0.3'
 group = 'com.cwelth.xtracommands' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'xtracommands'
 

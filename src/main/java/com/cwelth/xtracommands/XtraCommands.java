@@ -42,6 +42,7 @@ public class XtraCommands {
                             .then(Quake.register(dispatcher))
                             .then(SummonRandom.register(dispatcher))
                             .then(TPRandom.register(dispatcher))
+                            .then(SummonNamed.register(dispatcher))
             );
             dispatcher.register(Commands.literal(XtraCommands.MOD_ID).redirect(cmdsXC));
         }
