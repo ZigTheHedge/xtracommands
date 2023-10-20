@@ -10,10 +10,13 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.coordinates.Coordinates;
 import net.minecraft.commands.arguments.coordinates.Vec3Argument;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.dimension.DimensionType;
 
 import java.awt.*;
@@ -28,6 +31,14 @@ public class TPRandom {
                                 Level level = player.level;
                                 double min_distance = IntegerArgumentType.getInteger(cs, "min_distance");
                                 double max_distance = IntegerArgumentType.getInteger(cs, "max_distance");
+                                double playerOldX = player.getX();
+                                double playerOldZ = player.getZ();
+                                double coordinate_scale = level.dimensionType().coordinateScale();
+                                if(coordinate_scale != 1.0)
+                                {
+                                    min_distance /= 2;
+                                    max_distance /= 2;
+                                }
                                 double max_delta = Math.abs(max_distance - min_distance);
 
                                 boolean success = false;
@@ -75,11 +86,14 @@ public class TPRandom {
                                                     for(double deltaY = y_adder; deltaY > min_build_height; deltaY--)
                                                     {
                                                         BlockPos check_non_air = new BlockPos(deltaX + x_adder, deltaY, deltaZ + z_adder);
-                                                        if(level.getBlockState(check_non_air).getBlock() != Blocks.AIR)
+                                                        Block liquidCheck = level.getBlockState(check_non_air).getBlock();
+                                                        if(liquidCheck != Blocks.AIR)
                                                         {
-                                                            y_adder = deltaY + 1;
-                                                            success = true;
-                                                            break;
+                                                            if(!(liquidCheck instanceof LiquidBlock)) {
+                                                                y_adder = deltaY + 1;
+                                                                success = true;
+                                                                break;
+                                                            }
                                                         }
                                                     }
                                                     if(success) break;
@@ -110,7 +124,9 @@ public class TPRandom {
                                     }
                                     if(success)
                                     {
-                                        player.teleportTo(deltaX + x_adder, y_adder, deltaZ + z_adder);
+                                        player.teleportTo((int)(deltaX + x_adder) + 0.5F, y_adder, (int)(deltaZ + z_adder) + 0.5F);
+                                        double distance = Math.sqrt(Math.pow((deltaX + x_adder) - playerOldX, 2) + Math.pow((deltaZ + z_adder) - playerOldZ, 2));
+                                        player.sendSystemMessage(Component.literal("Teleported " + distance + " blocks away."));
                                     }
                                 }
                                 return 0;

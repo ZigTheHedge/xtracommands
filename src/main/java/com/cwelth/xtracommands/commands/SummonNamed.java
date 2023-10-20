@@ -57,8 +57,8 @@ public class SummonNamed {
         if (!net.minecraftforge.event.ForgeEventFactory.doSpecialSpawn((Mob)newEntity, level, (float)newEntity.getX(), (float)newEntity.getY(), (float)newEntity.getZ(), null, MobSpawnType.COMMAND))
             ((Mob)newEntity).finalizeSpawn(level, level.getCurrentDifficultyAt(newEntity.blockPosition()), MobSpawnType.COMMAND, (SpawnGroupData)null, (CompoundTag)null);
 
+        cs.getLevel().addFreshEntity(newEntity);
         newEntity.setCustomName(Component.literal(name));
         newEntity.setCustomNameVisible(true);
-        cs.getLevel().addFreshEntity(newEntity);
     }
 }
